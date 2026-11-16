@@ -79,7 +79,7 @@ function render_products(items){
     if (items.length === 0){
         const message = document.createElement("p")
         message.className = "empty-message";
-        message.textContent = "No product found."
+        message.textContent = "No product found. Check back soon!"
         container.appendChild(message);
         return;
     }

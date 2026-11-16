@@ -114,7 +114,7 @@ class UserItem(db.Model):
 with app.app_context():
     db.create_all()
     print(f"Database connectted to {db.engine.url.database}")
-    
+
 #Register
 @app.route("/register", methods=["POST"])
 def register():
