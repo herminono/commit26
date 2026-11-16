@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PakaiLagi</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Nunito+Sans:wght@400;600;700&family=Playfair+Display:ital,wght@1,600;1,700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<header class="navbar">
+    <h2 class="logo">Pakai<span>Lagi</span></h2>
+
+    <nav>
+        <a href="#" onclick="show_page('home')">Home</a>
+        <a href="#" onclick="show_page('explore')">Explore</a>
+    </nav>
+
+    <div class="nav-buttons">
+        <button class="nav-icon" onclick="show_page('wishlist')">♡ Wishlist</button>
+        <button class="nav-icon" onclick="show_page('cart')">🛒 Cart</button>
+        <button class="login-btn" onclick="show_page('login')">Login</button>
+        <button class="register-btn" onclick="show_page('register')">Register</button>
+        <button id="merchant-btn" class="nav-icon hidden" onclick="show_page('merchant')">Dashboard</button>
+        <button id="logout-btn" class="login-btn hidden" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<!-- HOME -->
+<section id="home" class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-text">
+            <p class="label">A Marketplace for University Students</p>
+
+            <h1>
+                Less Spending,<br>
+                <span class="serif">More Living.</span>
+            </h1>
+
+            <p>
+                Find affordable essentials from students around your campus.
+            </p>
+
+            <button onclick="show_page('explore')">Explore Now →</button>
+        </div>
+
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKr4QnD3xnb-y7DahQYey5XuEqVkD4PC8SpkW14KJH6j9nEAg37nqoDc&s=10"
+             alt="Rental and Secondhand">
+    </div>
+
+    <!-- CATEGORIES -->
+    <section class="categories">
+        <div class="section-heading">
+            <p class="label">Find What You Need</p>
+            <h2>Explore by <span>Category.</span></h2>
+            <p>Find your academic necessities here.</p>
+        </div>
+
+        <div class="category-list">
+            <div class="category-card" onclick="show_page('explore')">
+                <div class="category-icon">📚</div>
+                <h3>Books</h3>
+                <p>Books and lecture materials.</p>
+            </div>
+
+            <div class="category-card" onclick="show_page('explore')">
+                <div class="category-icon">🧪</div>
+                <h3>Laboratory</h3>
+                <p>Items for laboratory activities.</p>
+            </div>
+
+            <div class="category-card" onclick="show_page('explore')">
+                <div class="category-icon">💻</div>
+                <h3>Electronics</h3>
+                <p>Equipment to enhance productivity</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY PakaiLagi -->
+    <section class="why-section">
+        <div class="section-heading">
+            <p class="label">Why PakaiLagi?</p>
+            <h2>More Than Just a <span>Marketplace.</span></h2>
+        </div>
+
+        <div class="why-list">
+            <div class="why-card">
+                <span>01</span>
+                <h3>Save More Money</h3>
+                <p>
+                    Get the items you need for college
+                    at more affordable prices.
+                </p>
+            </div>
+
+            <div class="why-card">
+                <span>02</span>
+                <h3>Easy & Practical</h3>
+                <p>
+                    Buy, sell, or rent items easily,
+                    all on one platform.
+                </p>
+            </div>
+
+            <div class="why-card">
+                <span>03</span>
+                <h3>Sustainability</h3>
+                <p>
+                    Extend the lifespan of items and reduce
+                    waste through reuse.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Contact: +62 821-7950-3823X | support@pakailagi.com</p>
+        <p>© 2026 PakaiLagi. All rights reserved.</p>
+    </footer>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore" class="page hidden">
+    <div class="container">
+
+        <div class="section-heading">
+            <h1>Explore <span>Products.</span></h1>
+            <p>Find what you need at PakaiLagi.</p>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-box">
+            <span>⌕</span>
+            <input type="text" id="search-input" placeholder="Books">
+        </div>
+
+        <!-- PRODUCTS -->
+        <div class="products" id="products-container">
+            <p class="empty-message">Loading products...</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contact: +62 831-7950-3823 | support@pakailagi.com</p>
+        <p>© 2026 PakaiLagi. All rights reserved.</p>
+    </footer>
+</section>
+
+<!-- WISHLIST -->
+<section id="wishlist" class="page hidden">
+    <div class="container">
+        <div class="section-heading">
+            <h1>My <span>Wishlist.</span></h1>
+            <p>Items you wish to keep.</p>
+        </div>
+
+        <div id="wishlist-items" class="saved-products">
+            <p class="empty-message">No product in wishlist yet!</p>
+        </div>
+
+        <button class="back-btn" onclick="show_page('explore')">
+            ← Continue Exploring
+        </button>
+    </div>
+
+    <footer>
+        <p>© 2026 PakaiLagi. All rights reserved.</p>
+    </footer>
+</section>
+
+<!-- CART -->
+<section id="cart" class="page hidden">
+    <div class="container">
+
+        <div class="checkout-summary">
+
+            <div class="checkout-header">
+                <h2>Checkout Summary</h2>
+                <span class="checkout-badge">Manual Checkout</span>
+            </div>
+
+            <div id="cart-items" class="cart-summary-list">
+                <p class="empty-message">
+                    Cart is empty!.
+                </p>
+            </div>
+
+            <div class="checkout-total">
+                <h3>Estimated total:</h3>
+                <h3 id="cart-total">Rp0</h3>
+            </div>
+
+            <p class="checkout-note">
+                Rental price estimation is one day rental.
+                Total price is decided by you and the merchant.
+            </p>
+
+            <div class="checkout-information">
+                <h3>ⓘ Contact merchant to continue.</h3>
+
+                <p>
+                    PakaiLagi has yet to process payment and
+                    create automatic order. Availability, total
+                    price, and delivery methods are discussed
+                    directly with the merchant.
+                </p>
+            </div>
+
+            <button
+                class="back-btn"
+                onclick="show_page('explore')">
+                ← Continue Exploring
+            </button>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <p>© 2026 PakaiLagi. All rights reserved.</p>
+    </footer>
+</section>
+<!-- PRODUCT DETAIL MODAL -->
+<div id="product-modal" class="modal hidden">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal()">×</button>
+
+        <img id="modal-image" src="" alt="Product">
+
+        <div class="modal-info">
+            <span id="modal-type" class="product-badge"></span>
+            <h2 id="modal-name"></h2>
+            <h3 id="modal-price"></h3>
+
+            <div class="product-detail">
+                <p><strong>Condition:</strong> <span id="modal-condition"></span></p>
+                <p><strong>Merchant:</strong> <span id="modal-seller"></span></p>
+                <p id="modal-description"></p>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="wishlist-action" onclick="addWishlist()">
+                    ♡ Wishlist
+                </button>
+
+                <button onclick="addCart()">🛒 Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- LOGIN -->
+<section id="login" class="page hidden auth-page">
+    <div class="form-card">
+        <h1>Welcome Back!</h1>
+        <p>Login to your PakaiLagi account.</p>
+
+        <form onsubmit="login(event)">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="Email" required>
+
+            <label>Password</label>
+            <input type="password" id="login-password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>Not registered?
+            <a href="#" onclick="show_page('register')">Register</a>
+        </p>
+    </div>
+</section>
+
+<!-- REGISTER -->
+<section id="register" class="page hidden auth-page">
+    <div class="form-card">
+        <h1>Create Account</h1>
+        <p>Register to join us in PakaiLagi.</p>
+
+        <form onsubmit="register(event)">
+            <label>Full Name</label>
+            <input type="text" id="register-name" placeholder="Legal name" required>
+
+            <label>Email</label>
+            <input type="email" id="register-email" placeholder="Email" required>
+
+            <label>Password</label>
+            <input type="password" id="register-password" minlength="6" placeholder="Password" required>
+
+            <label>Register as</label>
+            <select id="register-role" required>
+                <option value="">Role</option>
+                <option value="buyer">Buyer</option>
+                <option value="merchant">Merchant</option>
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already registered?
+            <a href="#" onclick="show_page('login')">Login</a>
+        </p>
+    </div>
+</section>
+<!-- MERCHANT DASHBOARD -->
+<section id="merchant" class="page hidden">
+    <div class="container">
+        <div class="merchant-dashboard-card">
+
+            <div class="merchant-header-top">
+                <div>
+                    <h2>Merchant Dashboard</h2>
+                    <p>Manage your items.</p>
+                </div>
+                <span class="merchant-badge-top">Merchant</span>
+            </div>
+
+            <div class="merchant-form-section">
+                <h3>Add new items.</h3>
+
+                <form id="product-form" onsubmit="addNewProduct(event)">
+                    <label>Product Name</label>
+                    <input type="text" id="new-name" placeholder="Contoh: Buku Kalkulus" required>
+
+                    <label>Price (Rp)</label>
+                    <input type="number" id="new-price" placeholder="Contoh: 60000" min="1" required>
+
+                    <label>Transaction type</label>
+                    <div class="radio-group">
+                        <label class="radio-label">
+                            <input type="radio" name="new-type" value="secondhand" checked> Secondhand
+                        </label>
+                        <label class="radio-label">
+                            <input type="radio" name="new-type" value="rental"> Rental
+                        </label>
+                    </div>
+
+                    <label>Product Condition</label>
+                    <select id="new-condition" required>
+                        <option value="" disabled selected>Choose Condition</option>
+                        <option value="Bekas - Sangat Baik">Used - Very Well</option>
+                        <option value="Bekas - Baik">Used - Good</option>
+                        <option value="Baru">New</option>
+                    </select>
+
+                    <label>Image URL</label>
+                    <input type="url" id="new-image" placeholder="https://example.com/image.jpg" required>
+
+                    <label>Product Description</label>
+                    <textarea id="new-description" placeholder="Item's description and details..." rows="4" required></textarea>
+
+                    <button type="submit" class="submit-merchant-btn">Add product</button>
+                </form>
+
+                <p class="merchant-footer-note">Make sure product information is correct before publishing.</p>
+            </div>
+            <div class="merchant-products-section">
+                <h3>My Products</h3>
+                <p>Manage your product.</p>
+
+                <div id="merchant-products-list">
+                    <p class="empty-message">No product yet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Contact: +62 831-7950-3823 | support@pakailagi.com</p>
+        <p>© 2026 PakaiLagi. All rights reserved.</p>
+    </footer>
+</section>
+<!-- TOAST NOTIFICATION -->
+<div id="toast-container" aria-live="polite"></div>
+<script src="{{url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
